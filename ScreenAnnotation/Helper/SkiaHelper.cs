@@ -14,20 +14,20 @@ namespace ScreenAnnotation.Helper
         internal static Thickness trashMargin = new Thickness(0,0,0,30);
         internal static Color backgroundColorHex = Color.FromUint(backgroundColor);
 
-        internal static (SKRect rect, float scaleX, float scaleY) CalculateRectangle(SKRect info, SKBitmap bitmap, BBAspect aspect = BBAspect.AspectFit) => CalculateRectangle(info, bitmap.Width, bitmap.Height, aspect);
+        internal static (SKRect rect, float scaleX, float scaleY) CalculateRectangle(SKRect info, SKBitmap bitmap, SAAspect aspect = SAAspect.AspectFit) => CalculateRectangle(info, bitmap.Width, bitmap.Height, aspect);
 
-        internal static (SKRect rect, float scaleX, float scaleY) CalculateRectangle(SKRect info, float width, float height, BBAspect aspect = BBAspect.AspectFit)
+        internal static (SKRect rect, float scaleX, float scaleY) CalculateRectangle(SKRect info, float width, float height, SAAspect aspect = SAAspect.AspectFit)
         {
-            BBAspect _aspect;
-            if(aspect == BBAspect.Auto)
+            SAAspect _aspect;
+            if(aspect == SAAspect.Auto)
             {
                 float aspectInfo = Math.Abs(info.Width / info.Height);
                 float aspectBitmap = Math.Abs(width / height);
                 var res = Math.Abs(aspectInfo - aspectBitmap);
                 if (res < 0.27)
-                    _aspect = BBAspect.AspectFill;
+                    _aspect = SAAspect.AspectFill;
                 else
-                    _aspect = BBAspect.AspectFit;
+                    _aspect = SAAspect.AspectFit;
             }
             else
                 _aspect = aspect;
@@ -35,9 +35,9 @@ namespace ScreenAnnotation.Helper
             float scaleX = info.Width / width;
             float scaleY = info.Height / height;
 
-            if (_aspect != BBAspect.Fill)
+            if (_aspect != SAAspect.Fill)
             {
-                scaleX = scaleY = _aspect == BBAspect.AspectFit ? Math.Min(scaleX, scaleY) : Math.Max(scaleX, scaleY);
+                scaleX = scaleY = _aspect == SAAspect.AspectFit ? Math.Min(scaleX, scaleY) : Math.Max(scaleX, scaleY);
                 float left = ((info.Width - scaleX * width) / 2) + info.Left;
                 float top = ((info.Height - scaleX * height) / 2) + info.Top;
                 float right = left + scaleX * width;

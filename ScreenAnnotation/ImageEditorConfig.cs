@@ -17,7 +17,7 @@ namespace ScreenAnnotation
     }
 
     /// <summary>Determines how the image is displayed. </summary>
-    public enum BBAspect
+    public enum SAAspect
     {
         AspectFit = 0,
         AspectFill = 1,
@@ -44,7 +44,7 @@ namespace ScreenAnnotation
 
         /// <summary></summary>
         public ImageEditorConfig(bool canAddText = true, bool canFingerPaint = true, bool canTransformMainBitmap = true, float? cropAspectRatio = null,
-                                 List<SKBitmapImageSource> stickers = null, int? outImageHeight = null, int? outImageWidht = null, BBAspect aspect = BBAspect.Auto,
+                                 List<SKBitmapImageSource> stickers = null, int? outImageHeight = null, int? outImageWidht = null, SAAspect aspect = SAAspect.Auto,
                                  BackgroundType backgroundType = BackgroundType.Transparent, SKColor backgroundColor = default, 
                                  bool canSaveImage = true, string loadingText = _loadingText, string successSaveText = _successSaveText, string errorSaveText = _errorSaveText)
         {
@@ -108,7 +108,7 @@ namespace ScreenAnnotation
         public BackgroundType BackgroundType { get; set; } = BackgroundType.StretchedImage;
 
         /// <summary>Determines how the image is displayed</summary>
-        public BBAspect Aspect { get; set; } = BBAspect.Auto;
+        public SAAspect Aspect { get; set; } = SAAspect.Auto;
 
         /// <summary>determines whether the user can change the aspect ratio when cropping an image </summary>
         public bool CanChangeCropAspectRatio => CropAspectRatio == null;

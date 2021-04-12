@@ -20,7 +20,7 @@ namespace ScreenAnnotation
             assembly = GetType().GetTypeInfo().Assembly;
             this.BindingContext = this;
             var display = DeviceDisplay.MainDisplayInfo;
-            Config = new ImageEditorConfig(backgroundType: BackgroundType.StretchedImage, outImageHeight: (int)display.Height, outImageWidht: (int)display.Width, aspect: BBAspect.Auto);
+            Config = new ImageEditorConfig(backgroundType: BackgroundType.StretchedImage, outImageHeight: (int)display.Height, outImageWidht: (int)display.Width, aspect: SAAspect.Auto);
         }
 
         public bool ConfigVisible { get; set; }
@@ -30,11 +30,11 @@ namespace ScreenAnnotation
         public int? OutImageWidht { get; set; } = null;
         public bool UseSampleImage { get; set; } = true;
 
-        public List<BBAspect> Aspects { get; } = new List<BBAspect> { BBAspect.Auto, BBAspect.AspectFill, BBAspect.AspectFit, BBAspect.Fill };
+        public List<SAAspect> Aspects { get; } = new List<SAAspect> { SAAspect.Auto, SAAspect.AspectFill, SAAspect.AspectFit, SAAspect.Fill };
         public List<BackgroundType> BackgroundTypes { get; } = new List<BackgroundType> { BackgroundType.Transparent, BackgroundType.StretchedImage, BackgroundType.Color };
         public List<SKColor> Colors { get; } = new List<SKColor> { SKColors.Red, SKColors.Green, SKColors.Blue };
 
-        private async void GetEditedImage_Clicked(object sender, EventArgs e)
+        async void CVDetailImage_SelectionChanged(System.Object sender, Xamarin.Forms.SelectionChangedEventArgs e)
         {
             if (!(Config?.Stickers?.Count > 0) && CanAddStickers)
                 GetBitmaps(stickersCount);
@@ -59,22 +59,10 @@ namespace ScreenAnnotation
             }
             catch (Exception ex)
             {
-                await DisplayAlert("", ex.Message, "fewf");
+                await DisplayAlert("", ex.Message, "OK");
             }
         }
 
-
-        private void SetConfig_Clicked(object sender, EventArgs e)
-        {
-            ConfigVisible = !ConfigVisible;
-        }
-
-        private void Clean_Clicked(object sender, EventArgs e)
-        {
-            Config.DisposeStickers();
-            MyImage.Source = null;
-            GC.Collect();
-        }
 
         private void GetBitmaps(int maxCount)
         {
